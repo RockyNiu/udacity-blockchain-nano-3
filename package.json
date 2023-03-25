@@ -11,6 +11,7 @@
   "author": "RockyNiu",
   "license": "MIT",
   "devDependencies": {
+    "@truffle/hdwallet-provider": "2.1.9",
     "lite-server": "2.4.0"
   }
 }
