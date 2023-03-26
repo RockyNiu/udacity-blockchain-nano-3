@@ -364,7 +364,7 @@ contract SupplyChain is Ownable, FarmerRole, ConsumerRole, RetailerRole, Distrib
   productID = _item.productID;
   productNotes = _item.productNotes;
   productPrice = _item.productPrice;
-  itemState = unit(_item.itemState);
+  itemState = uint(_item.itemState);
   distributorID = _item.distributorID;
   retailerID = _item.retailerID;
   consumerID = _item.consumerID;
