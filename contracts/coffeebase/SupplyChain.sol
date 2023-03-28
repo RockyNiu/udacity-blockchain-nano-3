@@ -162,6 +162,7 @@ contract SupplyChain is Ownable, FarmerRole, ConsumerRole, RetailerRole, Distrib
   // Define a function 'harvestItem' that allows a farmer to mark an item 'Harvested'
   function harvestItem (
     uint _upc,
+    address _originFarmID, 
     string memory _originFarmName, 
     string memory _originFarmInformation, 
     string  memory _originFarmLatitude, 
@@ -174,7 +175,7 @@ contract SupplyChain is Ownable, FarmerRole, ConsumerRole, RetailerRole, Distrib
       _sku,
       _upc,
       msg.sender, // Owner ID, the farmer
-      msg.sender, // Origin Farm ID
+      _originFarmID, // Origin Farm ID
       _originFarmName,
       _originFarmInformation,
       _originFarmLatitude,

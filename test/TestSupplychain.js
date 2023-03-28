@@ -68,6 +68,7 @@ describe('SupplyChain Happy Case', async () => {
         // Mark an item as Harvested by calling function harvestItem()
         const result = await supplyChain.harvestItem(
             upc,
+            originFarmerID,
             originFarmName,
             originFarmInformation,
             originFarmLatitude,
