@@ -13,10 +13,10 @@ contract SupplyChain is Ownable, FarmerRole, ConsumerRole, RetailerRole, Distrib
   // address owner;
 
   // // Define a variable called 'upc' for Universal Product Code (UPC)
-  // uint  upc;
+  uint  upc;
 
   // Define a variable called 'sku' for Stock Keeping Unit (SKU)
-  uint  sku;
+  uint  sku_count;
 
   // Define a public mapping 'items' that maps the UPC to an Item.
   mapping (uint => Item) items;
@@ -148,8 +148,8 @@ contract SupplyChain is Ownable, FarmerRole, ConsumerRole, RetailerRole, Distrib
   // and set 'upc' to 1
   constructor() public payable {
     // owner = msg.sender;
-    sku = 1;
-    // upc = 1;
+    sku_count = 0;
+    upc = 1;
   }
 
   // Define a function 'kill' if required
@@ -161,7 +161,7 @@ contract SupplyChain is Ownable, FarmerRole, ConsumerRole, RetailerRole, Distrib
 
   // Define a function 'harvestItem' that allows a farmer to mark an item 'Harvested'
   function harvestItem (
-    uint _upc, 
+    uint _upc,
     string memory _originFarmName, 
     string memory _originFarmInformation, 
     string  memory _originFarmLatitude, 
@@ -169,11 +169,12 @@ contract SupplyChain is Ownable, FarmerRole, ConsumerRole, RetailerRole, Distrib
     string memory _productNotes
   ) public onlyFarmer {
     // Add the new item as part of Harvest
+    uint _sku = sku_count + 1;
     Item memory newItem = Item (
-      sku,
+      _sku,
       _upc,
       msg.sender, // Owner ID, the farmer
-      msg.sender, // _originFarmerID
+      msg.sender, // Origin Farm ID
       _originFarmName,
       _originFarmInformation,
       _originFarmLatitude,
@@ -188,7 +189,7 @@ contract SupplyChain is Ownable, FarmerRole, ConsumerRole, RetailerRole, Distrib
     ); 
     items[_upc] = newItem;
     // Increment sku
-    sku = sku + 1;
+    sku_count = _sku;
     // Emit the appropriate event
     emit Harvested(_upc);
   }
@@ -230,6 +231,7 @@ contract SupplyChain is Ownable, FarmerRole, ConsumerRole, RetailerRole, Distrib
     // Update the appropriate fields
     items[_upc].itemState = State.ForSale;
     items[_upc].productPrice = _price;
+    items[_upc].productID = _upc + sku_count;
     // Emit the appropriate event
     emit ForSale(_upc);
   }
@@ -253,7 +255,6 @@ contract SupplyChain is Ownable, FarmerRole, ConsumerRole, RetailerRole, Distrib
     items[_upc].itemState = State.Sold;
     // Transfer money to farmer
     items[_upc].originFarmerID.transfer(items[_upc].productPrice);
-    transferOwnership(msg.sender); //TODO do we need this?
     // emit the appropriate event
     emit Sold(_upc);
   }
@@ -284,13 +285,13 @@ contract SupplyChain is Ownable, FarmerRole, ConsumerRole, RetailerRole, Distrib
     items[_upc].ownerID = msg.sender;
     items[_upc].retailerID = msg.sender;
     items[_upc].itemState = State.Received;
-    transferOwnership(msg.sender); //TODO do we need this?
     // Emit the appropriate event
     emit Received(_upc);
   }
 
   // Define a function 'purchaseItem' that allows the consumer to mark an item 'Purchased'
   // Use the above modifiers to check if the item is received
+  // TODO retailer should make up the price, and this function should be payable
   function purchaseItem(uint _upc) public 
     // Call modifier to check if upc has passed previous supply chain stage
     received(_upc)
@@ -299,9 +300,8 @@ contract SupplyChain is Ownable, FarmerRole, ConsumerRole, RetailerRole, Distrib
     {
     // Update the appropriate fields - ownerID, consumerID, itemState
     items[_upc].ownerID = msg.sender;
-    items[_upc].retailerID = msg.sender;
+    items[_upc].consumerID = msg.sender;
     items[_upc].itemState = State.Purchased;
-    transferOwnership(msg.sender); //TODO do we need this?
     // Emit the appropriate event
     emit Purchased(_upc);
   }
