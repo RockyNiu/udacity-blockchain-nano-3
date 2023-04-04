@@ -14,8 +14,16 @@ module.exports = {
     sepolia: {
       provider: () => new HDWalletProvider(mnemonic, `https://sepolia.infura.io/v3/${infuraKey}`),
         network_id: 11155111,       // sepolia's id
+        gas: 20000000,
+        gasPrice: 2369119944,
+        networkCheckTimeout: 200000,
+    },
+    goerli: {
+      provider: () => new HDWalletProvider(mnemonic, `https://goerli.infura.io/v3/${infuraKey}`),
+        network_id: 5,       // goerli's id
         gas: 5000000,
-        gasPrice: 1000000
+        gasPrice: 15490740269,
+        networkCheckTimeout: 200000,
     },
   },
 
