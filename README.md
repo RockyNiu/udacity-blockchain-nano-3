@@ -13,3 +13,8 @@ Homework for [udacity/nd1309-Project-6b-Example-Template (github.com)](https://g
   * `@truffle/hdwallet-provider` v2.1.9 - used in `truffle.js` to connect to a public test network
   * `truffle-assertions` v0.9.2 - used in unit tests, especially for checking emitted events
   * `truffle-contract` v4.0.31 - used in app 
+  * `truffle-contract` v4.0.31 - used in app
+* Local Demo
+![1](./doc/Fair%20Trade%20Coffee.jpg)
+![2](./doc/Fair%20Trade%20Coffee-2.jpg)
+![3](./doc/Fair%20Trade%20Coffee-3.jpg)

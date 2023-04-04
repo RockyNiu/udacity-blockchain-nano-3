@@ -9,11 +9,5 @@ const Ownable = artifacts.require("./Ownable.sol");
 
 
 module.exports = function(deployer) {
-  deployer.deploy(Ownable);
-  deployer.deploy(Roles);
-  deployer.deploy(FarmerRole);
-  deployer.deploy(DistributorRole);
-  deployer.deploy(RetailerRole);
-  deployer.deploy(ConsumerRole);
   deployer.deploy(SupplyChain);
 };
