@@ -190,7 +190,7 @@ describe('SupplyChain Happy Case', async () => {
     // 6th Test
     it("Testing smart contract function shipItem() that allows a distributor to ship coffee", async () => {
         // Mark an item as Sold by calling function shipItem()
-        const result = await supplyChain.shipItem(upc, { from: originFarmerID });
+        const result = await supplyChain.shipItem(upc, { from: distributorID });
 
         // Retrieve the just now saved item from blockchain by calling function fetchItem()
         const resultBufferOne = await supplyChain.fetchItemBufferOne.call(upc);

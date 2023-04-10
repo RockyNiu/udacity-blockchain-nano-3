@@ -270,7 +270,7 @@ contract SupplyChain is Ownable, FarmerRole, ConsumerRole, RetailerRole, Distrib
     sold(_upc)
     // Call modifier to verify caller of this function
     verifyCaller(items[_upc].ownerID)
-    onlyFarmer
+    onlyDistributor
     {
     // Update the appropriate fields
     items[_upc].itemState = State.Shipped;
